@@ -303,6 +303,11 @@ if (_IVactual > 0) then {
     };
 };
 
+// Add entry for Neck Penetrating Wounds
+if (_selectionN isEqualTo 0 && (_target getVariable [QEGVAR(otolaryngology,neckWound),false])) then {
+    _entries pushBack [LELSTRING(otolaryngology,NeckPenetratingInjury_Display), [1,0,0,1]]
+};
+
 // Add entries for open, bandaged, and stitched wounds
 private _woundEntries = [];
 

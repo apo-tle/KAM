@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="KAT">
+    <Package name="Otolaryngology">
+        <Key ID="STR_KAT_Otolaryngology_SETTING_enableNeck">
+            <English>Enable neck injuries</English>
+        </Key>
+        <Key ID="STR_KAT_Otolaryngology_NeckPenetratingInjury_Display">
+            <English>Neck Penetrating Injury</English>
+        </Key>
+    </Package>
+</Project>
