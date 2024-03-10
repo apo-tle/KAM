@@ -23,7 +23,7 @@ private _entries = [];
 private _nonissueColor = [1, 1, 1, 0.33];
 
 // Indicate if unit is bleeding at all
-if (IS_BLEEDING(_target)) then {
+if (IS_BLEEDING(_target) || _target getVariable [QEGVAR(otolaryngology,neckWoundBleeding),false]) then {
     // Give a qualitative description of the rate of bleeding
     private _cardiacOutput = [_target] call ACEFUNC(medical_status,getCardiacOutput);
     private _bleedRate = GET_BLOOD_LOSS(_target);

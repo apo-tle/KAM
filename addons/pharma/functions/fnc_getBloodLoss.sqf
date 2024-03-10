@@ -18,7 +18,13 @@
 params ["_unit"];
 
 private _woundBleeding = GET_WOUND_BLEEDING(_unit);
-if (_woundBleeding == 0) exitWith {0};
+private _neckBleeding = _unit getVariable [QEGVAR(otolaryngology,neckWoundBleeding),false];
+
+if (_woundBleeding == 0 && !(_neckBleeding)) exitWith {0};
+
+if (_neckBleeding) then {
+	_woundBleeding = _woundBleeding + 0.5; //todo change to setting for neck wound
+};
 
 private _cardiacOutput = [_unit] call ACEFUNC(medical_status,getCardiacOutput);
 private _alphaAction = _unit getVariable [QGVAR(alphaAction), 1];

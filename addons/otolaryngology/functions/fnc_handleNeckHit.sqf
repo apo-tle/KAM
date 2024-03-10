@@ -31,7 +31,6 @@ private _damageThreshold = 0.5; // todo move these to preInit
 private _scaleChanceWithDamage = true;
 private _defaultChance = 5;
 
-
 private _chanceIncrease = 0;
 if (_scaleChanceWithDamage) then {
 	_chanceIncrease = _chanceIncrease + ([0,linearConversion [(_damageThreshold),3,_damage,0,9,true]] select (_dmgType isEqualTo "bullet"));
@@ -42,8 +41,10 @@ if (_scaleChanceWithDamage) then {
 };
 
 if ((floor (random 100)) <= _chanceIncrease || _npiDebug) then {
-	[_unit, true] call ace_medical_fnc_setUnconscious;
-	_unit setVariable [QGVAR(neckWound),true];
+	//handle incap
+	_unit setVariable [QGVAR(neckWound),true,true];
+	_unit setVariable [QGVAR(neckWoundBleeding),true,true];
+	//[_unit] call EFUNC(circulation,updateInternalBleeding);
 
 	//todo set airway obstruction
 	//todo set random chance for severe airway obstruction

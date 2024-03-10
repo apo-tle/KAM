@@ -1,1 +1,2 @@
 PREP(handleNeckHit);
+PREP(init);
