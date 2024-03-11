@@ -44,6 +44,7 @@ if ((floor (random 100)) <= _chanceIncrease || _npiDebug) then {
 	//handle incap
 	_unit setVariable [QGVAR(neckWound),true,true];
 	_unit setVariable [QGVAR(neckWoundBleeding),true,true];
+	[QACEGVAR(medical,CriticalInjury), _unit] call CBA_fnc_localEvent;
 	//[_unit] call EFUNC(circulation,updateInternalBleeding);
 
 	//todo set airway obstruction

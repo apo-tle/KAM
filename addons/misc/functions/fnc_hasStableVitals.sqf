@@ -37,4 +37,6 @@ if (_heartRate < 40) exitWith { false };
 private _o2 = _unit getVariable [QEGVAR(breathing,airwayStatus), 100];
 if (_o2 < EGVAR(breathing,Stable_spo2)) exitWith { false };
 
+if (_unit getVariable [QEGVAR(otolaryngology,neckWound),false]) exitWith { false };
+
 true
