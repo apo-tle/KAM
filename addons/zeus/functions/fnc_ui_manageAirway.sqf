@@ -84,7 +84,7 @@ _sliderSPO2 sliderSetPosition (round _curSpO2Val);
 _sliderSPO2 ctrlAddEventHandler ["SliderPosChanged", _fnc_sliderMove_SPO2];
 [_sliderSPO2,_curSpO2Val] call _fnc_sliderMove_SPO2;
 
-(_display displayCtrl 16101) cbSetChecked (_unit getVariable [QEGVAR(airway,obstruction), false]);
+(_display displayCtrl 16101) cbSetChecked ((_unit getVariable [QEGVAR(airway,obstruction), 0]) > 0); //todo fix this to work with severe obstruction
 (_display displayCtrl 16102) cbSetChecked (_unit getVariable [QEGVAR(airway,occluded), false]);
 (_display displayCtrl 16103) cbSetChecked (_unit getVariable [QEGVAR(breathing,hemopneumothorax), false]);
 (_display displayCtrl 16104) cbSetChecked (_unit getVariable [QEGVAR(breathing,tensionpneumothorax), false]);

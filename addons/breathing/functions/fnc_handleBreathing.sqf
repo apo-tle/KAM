@@ -44,7 +44,7 @@ if (!local _unit) then {
         _breathing = false;
     };
 
-    if ((_unit getVariable [QEGVAR(airway,occluded), false]) || (_unit getVariable [QEGVAR(airway,obstruction), false])) then {
+    if ((_unit getVariable [QEGVAR(airway,occluded), false]) || ((_unit getVariable [QEGVAR(airway,obstruction), 0]) > 0)) then {
         _airway = false;
     };
 
@@ -111,7 +111,7 @@ if (!local _unit) then {
 
                 _output = 0; // SpO2_perfusion is false
             } else {// Obstruction with hyperextended head
-                if (_overstretch && _unit getVariable [QEGVAR(airway,obstruction), false] && !(_unit getVariable [QEGVAR(airway,occlusion), false]) && _heartRate >= 25) exitWith {
+                if ((_overstretch && (_unit getVariable [QEGVAR(airway,obstruction), 0] isEqualTo 1)) && !(_unit getVariable [QEGVAR(airway,occlusion), false]) && _heartRate >= 25) exitWith {
                     if(_BVMInUse) then {
                         if(_oxygenAssisted) then {
                             _output = 0.5 * _multiplierOxygen;

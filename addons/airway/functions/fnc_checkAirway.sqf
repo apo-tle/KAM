@@ -19,25 +19,41 @@
 params ["_medic", "_patient"];
 
 private _hintAirwayObstruction = LLSTRING(AirwayStatus_noObstruction);
-private _hintAirwayOcclusion = LLSTRING(AirwayStatus_noOcclusion);
-private _obstruction = LSTRING(AirwayStatus_noObstruction_short);
 private _occlusion = LSTRING(AirwayStatus_noOcclusion_short);
 
 private _hintWidth = 14;
 private _hintSize = 2;
 
-if (_patient getVariable [QGVAR(obstruction), false]) then {
-    _hintWidth = 17;
-    _hintAirwayObstruction = LLSTRING(AirwayStatus_Obstruction);
-    _obstruction = LSTRING(AirwayStatus_Obstruction_short);
-    if (_patient getVariable [QGVAR(overstretch), false]) then {
-        _hintAirwayObstruction = LLSTRING(AirwayStatus_mitigatedObstruction);
-        _obstruction = LLSTRING(AirwayStatus_mitigatedObstruction_short);
+private _hintAirwayOcclusion = "";
+private _obstruction = "";
+switch (_patient getVariable [QGVAR(obstruction), 0]) do {
+    case 1: {
+        _hintWidth = 17;
+        _hintAirwayObstruction = LLSTRING(AirwayStatus_Obstruction);
+        _obstruction = LSTRING(AirwayStatus_Obstruction_short);
+        if (_patient getVariable [QGVAR(overstretch), false]) then {
+            _hintAirwayObstruction = LLSTRING(AirwayStatus_mitigatedObstruction);
+            _obstruction = LLSTRING(AirwayStatus_mitigatedObstruction_short);
+        };
+        if (GVAR(autoTriage)) then {
+            _patient setVariable [QACEGVAR(medical,triageLevel), 3, true];
+        };
     };
-    if (GVAR(autoTriage)) then {
-        _patient setVariable [QACEGVAR(medical,triageLevel), 3, true];
+    case 2: {
+        _hintWidth = 17;
+        _hintAirwayObstruction = LLSTRING(AirwayStatus_severeObstruction);
+        _obstruction = LSTRING(AirwayStatus_severeObstruction_short);
+        if (GVAR(autoTriage)) then {
+            _patient setVariable [QACEGVAR(medical,triageLevel), 3, true];
+        };
+    };
+
+    default {
+        _hintAirwayOcclusion = LLSTRING(AirwayStatus_noOcclusion);
+        _obstruction = LSTRING(AirwayStatus_noObstruction_short);
     };
 };
+
 if (_patient getVariable [QGVAR(occluded), false]) then {
     _hintAirwayOcclusion = LLSTRING(AirwayStatus_Occlusion);
     _occlusion = LSTRING(AirwayStatus_Occlusion_short);
@@ -45,11 +61,11 @@ if (_patient getVariable [QGVAR(occluded), false]) then {
         _patient setVariable [QACEGVAR(medical,triageLevel), 3, true];
     };
 };
-if (!(_patient getVariable [QGVAR(occluded), false] && _patient getVariable [QGVAR(obstruction), false]) && GVAR(autoTriage)) then {_patient setVariable [QACEGVAR(medical,triageLevel), 0, true]};
+if (!(_patient getVariable [QGVAR(occluded), false] && (_patient getVariable [QGVAR(obstruction), 0]) isEqualTo 0) && GVAR(autoTriage)) then {_patient setVariable [QACEGVAR(medical,triageLevel), 0, true]};
 
 private _message = format ["%1<br />%2", _hintAirwayObstruction, _hintAirwayOcclusion];
 
-if (!(_patient getVariable [QGVAR(occluded), false]) && !(_patient getVariable [QGVAR(obstruction), false])) then {
+if (!(_patient getVariable [QGVAR(occluded), false]) && (_patient getVariable [QGVAR(obstruction), 0]) isEqualTo 0) then {
     _message = LLSTRING(AirwayStatus_Clear);
     _hintSize = 1.5;
     _hintWidth = 10;

@@ -246,6 +246,9 @@
             <Norwegian>Reduserte obstruksjonen</Norwegian>
             <Finnish>Vähentynyt tukos</Finnish>
         </Key>
+        <Key ID="STR_KAT_Airway_AirwayStatus_severeObstruction_short">
+            <English>Severe obstruction</English>
+        </Key>
         <Key ID="STR_KAT_Airway_AirwayStatus_noObstruction_short">
             <English>Not obstructed</English>
             <German>Nicht obstruiert</German>
@@ -293,6 +296,9 @@
             <Portuguese>Obstrução temporariamente mitigada</Portuguese>
             <Norwegian>Obstruksjon er midlertidig redusert</Norwegian>
             <Finnish>Tukos on väliaikaisesti lievennetty</Finnish>
+        </Key>
+        <Key ID="STR_KAT_Airway_AirwayStatus_severeObstruction">
+            <English>Airway is severely obstructed, surgery required</English>
         </Key>
         <Key ID="STR_KAT_Airway_AirwayStatus_noObstruction">
             <English>Airway is not obstructed</English>

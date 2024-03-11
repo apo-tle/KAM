@@ -17,6 +17,5 @@
 
  params ["_unit"];
 
-
  _unit setVariable [QGVAR(neckWound),false,true];
  _unit setVariable [QGVAR(neckWoundBleeding),false,true];

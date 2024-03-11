@@ -70,7 +70,7 @@ _unit setVariable [QACEGVAR(medical,fractures), [0,0,0,0,0,0], true];
 //KAT Airway
 _unit setVariable [QEGVAR(airway,occluded), false, true];
 _unit setVariable [QEGVAR(airway,wasOccluded), false];
-_unit setVariable [QEGVAR(airway,obstruction), false, true];
+_unit setVariable [QEGVAR(airway,obstruction), 0, true];
 _unit setVariable [QEGVAR(airway,recovery), false, true];
 _unit setVariable [QEGVAR(airway,overstretch), false, true];
 _unit setVariable [QEGVAR(airway,clearedTime), 0, true];

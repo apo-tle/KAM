@@ -21,5 +21,6 @@ params ["_unit"];
 if ( !(GVAR(enable)) || (_unit getVariable ["KAT_Obstruction_Exclussion", false])) exitWith {};
 
 if (random(100) <= GVAR(probability_obstruction)) then {
-    _unit setVariable [QGVAR(obstruction), true, true];
+    _newObstruction = [1,2] select (random(100) <= 100); // todo change to variable about probability of obstruction w/ surgery in otolaryngology
+    _unit setVariable [QGVAR(obstruction), _newObstruction, true];
 };

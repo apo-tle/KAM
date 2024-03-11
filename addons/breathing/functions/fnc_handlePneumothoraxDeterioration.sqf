@@ -27,7 +27,7 @@ params ["_unit", "_chanceIncrease"];
             params ["_args", "_idPFH"];
             _args params ["_unit", "_chanceIncrease"];
 
-            private _breathing = !(_unit getVariable [QEGVAR(airway,occluded), false]) && !(_unit getVariable [QEGVAR(airway,obstruction), false]) && (GET_HEART_RATE(_unit) > 20);
+            private _breathing = !(_unit getVariable [QEGVAR(airway,occluded), false]) && ((_unit getVariable [QEGVAR(airway,obstruction), 0]) isEqualTo 0) && (GET_HEART_RATE(_unit) > 20);
 
             // If patient is dead, already treated or has already deteriorated into advanced pneumothorax, kill the PFH
             if (_unit getVariable [QGVAR(hemopneumothorax), false] || _unit getVariable [QGVAR(tensionpneumothorax), false] || !(alive _unit) || _unit getVariable [QGVAR(pneumothorax), 0] isEqualTo 0) exitWith {

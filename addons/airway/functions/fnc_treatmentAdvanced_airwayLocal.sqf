@@ -20,13 +20,13 @@
 
 params ["_medic", "_patient","_classname", "_usedItem"];
 
-if (_patient getVariable [QGVAR(occluded), false]) exitWith {
+if (_patient getVariable [QGVAR(occluded), false] || ((_patient getVariable [QGVAR(obstruction), 0]) isEqualTo 2)) exitWith {
     [QGVAR(airwayFeedback), [_medic, LLSTRING(AirwayStatus_NotClearForItem)], _medic] call CBA_fnc_targetEvent;
     [_medic, _usedItem] call ACEFUNC(common,addToInventory);
 };
 
 _patient setVariable [QGVAR(airway), true, true];
-_patient setVariable [QGVAR(obstruction), false, true];
+_patient setVariable [QGVAR(obstruction), 0, true];
 _patient setVariable [QGVAR(airway_item), _classname, true];
 
 [_patient, _usedItem] call ACEFUNC(medical_treatment,addToTriageCard);

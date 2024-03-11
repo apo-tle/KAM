@@ -23,7 +23,7 @@ if (!local _unit) exitWith {};
 
 // KAT Airway
 
-_unit setVariable [QEGVAR(airway,obstruction), false, true];
+_unit setVariable [QEGVAR(airway,obstruction), 0, true];
 _unit setVariable [QEGVAR(airway,airway), false, true];
 _unit setVariable [QEGVAR(airway,occluded), false, true];
 _unit setVariable [QEGVAR(airway,overstretch), false, true];
