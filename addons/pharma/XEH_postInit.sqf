@@ -21,17 +21,16 @@
 
 ["kat_fluid", LINKFUNC(fluid)] call CBA_fnc_addEventHandler;
 
-["kat_PainkillerItem", "kat_Painkiller"] call ACEFUNC(common,registerItemReplacement);
-["kat_PenthroxItem", "kat_Penthrox"] call ACEFUNC(common,registerItemReplacement);
-["kat_CarbonateItem", "kat_Carbonate"] call ACEFUNC(common,registerItemReplacement);
-["kat_PervitinItem", "kat_Pervitin"] call ACEFUNC(common,registerItemReplacement);
-["kat_CaffeineItem", "kat_Caffeine"] call ACEFUNC(common,registerItemReplacement);
 
 [QEGVAR(misc,handleRespawn), LINKFUNC(handleRespawn)] call CBA_fnc_addEventHandler;
 
 [QACEGVAR(medical_gui,updateInjuryListPart), LINKFUNC(gui_updateInjuryListPart)] call CBA_fnc_addEventHandler;
 [QACEGVAR(medical_gui,updateBodyImage), LINKFUNC(gui_updateBodyImage)] call CBA_fnc_addEventHandler;
 [QACEGVAR(medical_treatment,fullHealLocalMod), LINKFUNC(fullHealLocal)] call CBA_fnc_addEventHandler;
+[QACEGVAR(medical_status,getBloodLoss), {
+    _this set [1, _this#1 * (_this#0 getVariable [QGVAR(alphaAction), 1])];
+}] call CBA_fnc_addEventHandler;
+
 ["ace_treatmentSucceded", {
     params ["_medic", "_patient", "_bodyPart", "_classname"];
     if (!(GVAR(staminaMedication)) || ACE_Player != _patient || !(alive _patient)) exitWith {};
@@ -58,3 +57,6 @@
         };
     };
 }] call CBA_fnc_addEventHandler;
+
+[QACEGVAR(medical_status,initialized), LINKFUNC(coagRegen)] call CBA_fnc_addEventHandler;
+[QACEGVAR(medical_status,initialized), LINKFUNC(clotWound)] call CBA_fnc_addEventHandler;

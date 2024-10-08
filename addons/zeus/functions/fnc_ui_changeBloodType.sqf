@@ -21,7 +21,7 @@ private _display = ctrlParent _control;
 private _ctrlButtonOK = _display displayCtrl 1;
 private _logic = GETMVAR(BIS_fnc_initCuratorAttributes_target,objNull);
 
-_control ctrlRemoveAllEventHandlers "setFocus";
+_control ctrlRemoveAllEventHandlers "SetFocus";
 
 
 private _unit = attachedTo _logic;
@@ -56,14 +56,14 @@ private _fnc_sliderMove = {
     private _idc = ctrlIDC _slider;
     private _logic = GETMVAR(BIS_fnc_initCuratorAttributes_target,objNull);
     private _unit = attachedTo _logic;
-    private _curVal = _unit getVariable [QACEGVAR(medical,bloodvolume), 6.0];
+    private _curVal = GET_BLOOD_VOLUME_LITERS(_unit);
     _slider ctrlSetTooltip format [LLSTRING(sliderFormat13was23), parseNumber((sliderPosition _slider) toFixed 2), (parseNumber (_curVal toFixed 2)), "L"];
 };
 
 private _slider = _display displayCtrl 26423;
 _slider sliderSetRange [0, 6];
 _slider sliderSetSpeed [1,0.5];
-private _curBloodVol = _unit getVariable [QACEGVAR(medical,bloodvolume), 6.0];
+private _curBloodVol = GET_BLOOD_VOLUME_LITERS(_unit);
 _slider sliderSetPosition (parseNumber (_curBloodVol toFixed 2));
 _slider ctrlAddEventHandler ["SliderPosChanged", _fnc_sliderMove];
 [_slider,_curBloodVol] call _fnc_sliderMove;
@@ -88,10 +88,10 @@ private _select = switch (_playerBloodyType) do
 private _fnc_onConfirm = {
     params [["_ctrlButtonOK", controlNull, [controlNull]]];
 
-    private _display = ctrlparent _ctrlButtonOK;
+    private _display = ctrlParent _ctrlButtonOK;
     if (isNull _display) exitWith {};
 
-    private _logic = GETMVAR(BIS_fnc_initCuratorAttributes_target,objnull);
+    private _logic = GETMVAR(BIS_fnc_initCuratorAttributes_target,objNull);
     if (isNull _logic) exitWith {};
 
     private _unit = attachedTo _logic;
@@ -113,10 +113,11 @@ private _fnc_onConfirm = {
         _dogtagData set [1, _bloodtype];
     };
 
-    private _curBloodVol = _unit getVariable [QACEGVAR(medical,bloodvolume), 6.0];
+    private _curBloodVol = GET_BLOOD_VOLUME_LITERS(_unit);
     private _sliderValue = sliderPosition (_display displayCtrl 26423);
-    _unit setVariable [QACEGVAR(medical,bloodvolume), ( parseNumber (_sliderValue toFixed 2)), true];
+    _sliderValue = parseNumber (_sliderValue toFixed 2);
+    REDUCE_TOTAL_BLOOD_VOLUME(_unit,((_curBloodVol - _sliderValue) * 1000)); 
 };
 
-_display displayAddEventHandler ["unload", _fnc_onUnload];
-_ctrlButtonOK ctrlAddEventHandler ["buttonclick", _fnc_onConfirm];
+_display displayAddEventHandler ["Unload", _fnc_onUnload];
+_ctrlButtonOK ctrlAddEventHandler ["ButtonClick", _fnc_onConfirm];

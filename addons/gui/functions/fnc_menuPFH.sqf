@@ -1,6 +1,7 @@
 #include "..\script_component.hpp"
 /*
  * Author: mharis001
+ * Modified: Mazinski
  * Handles updating the Medical Menu UI for the current target.
  *
  * Arguments:
@@ -13,18 +14,18 @@
  * [] call ace_medical_gui_fnc_menuPFH
  *
  * Public: No
- *
- * THIS IS MODYFIED TO ALLOW THE "CHECK UNIT MEDICAL MENU" ZEUS MODULE TO WORK
  */
 
 // Check if menu should stay open for target
-if(isNull findDisplay 312) then {
-    if !([ACE_player, ACEGVAR(medical_gui,target), ["isNotInside", "isNotSwimming"]] call ACEFUNC(common,canInteractWith) && {[ACE_player, ACEGVAR(medical_gui,target)] call ACEFUNC(medical_gui,canOpenMenu)}) then {
-        closeDialog 0;
-        // Show hint if distance condition failed
-        if ((ACE_player distance ACEGVAR(medical_gui,target) > ACEGVAR(medical_gui,maxDistance)) && {vehicle ACE_player != vehicle ACEGVAR(medical_gui,target)}) then {
-            [[ACELLSTRING(medical,DistanceToFar), ACEGVAR(medical_gui,target) call ACEFUNC(common,getName)], 2] call ACEFUNC(common,displayTextStructured);
-        };
+if !(
+    ([ACE_player, ACEGVAR(medical_gui,target), ["isNotInside", "isNotSwimming"]] call ACEFUNC(common,canInteractWith) || {!isNull findDisplay 312}) && // Allow player to look at himself when unconsious and in Zeus
+    {[ACE_player, ACEGVAR(medical_gui,target)] call ACEFUNC(medical_gui,canOpenMenu)}
+) then {
+    closeDialog 0;
+    // Show hint if distance condition failed
+    if ((ACE_player distance ACEGVAR(medical_gui,target) > ACEGVAR(medical_gui,maxDistance)) && {vehicle ACE_player != vehicle ACEGVAR(medical_gui,target)}) then {
+        if (((getPosATL ACEGVAR(medical_gui,target)) # 2) < -9) exitWith {}; // handle dragging corpse/clone
+        [[ACELSTRING(medical,DistanceToFar), ACEGVAR(medical_gui,target) call ACEFUNC(common,getName)], 2] call ACEFUNC(common,displayTextStructured);
     };
 };
 
@@ -37,6 +38,12 @@ if (isNull _display) exitWith {};
 
 // Update treatment actions for current category
 [_display] call ACEFUNC(medical_gui,updateActions);
+
+// Update IV Status
+[ACEGVAR(medical_gui,target)] call FUNC(updateIVStatus);
+
+// Update Blood Gas
+[ACEGVAR(medical_gui,target)] call FUNC(updateABGStatus);
 
 // Update injury list
 private _ctrlInjuries = _display displayCtrl IDC_INJURIES;

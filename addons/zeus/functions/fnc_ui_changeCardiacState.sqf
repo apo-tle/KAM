@@ -21,7 +21,7 @@ private _display = ctrlParent _control;
 private _ctrlButtonOK = _display displayCtrl 1;
 private _logic = GETMVAR(BIS_fnc_initCuratorAttributes_target,objNull);
 
-_control ctrlRemoveAllEventHandlers "setFocus";
+_control ctrlRemoveAllEventHandlers "SetFocus";
 
 
 private _unit = attachedTo _logic;
@@ -55,10 +55,10 @@ private _fnc_onUnload = {
 private _fnc_onConfirm = {
     params [["_ctrlButtonOK", controlNull, [controlNull]]];
 
-    private _display = ctrlparent _ctrlButtonOK;
+    private _display = ctrlParent _ctrlButtonOK;
     if (isNull _display) exitWith {};
 
-    private _logic = GETMVAR(BIS_fnc_initCuratorAttributes_target,objnull);
+    private _logic = GETMVAR(BIS_fnc_initCuratorAttributes_target,objNull);
     if (isNull _logic) exitWith {};
 
     private _unit = attachedTo _logic;
@@ -78,5 +78,5 @@ private _fnc_onConfirm = {
     };
 };
 
-_display displayAddEventHandler ["unload", _fnc_onUnload];
-_ctrlButtonOK ctrlAddEventHandler ["buttonclick", _fnc_onConfirm];
+_display displayAddEventHandler ["Unload", _fnc_onUnload];
+_ctrlButtonOK ctrlAddEventHandler ["ButtonClick", _fnc_onConfirm];
